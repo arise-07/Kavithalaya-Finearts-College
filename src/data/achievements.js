@@ -10,7 +10,7 @@ export const HIGHLIGHTS = [
     id: 'world-record',
     icon: 'laurel',
     title: 'World Record Recognition',
-    text: 'A milestone associated with a large-scale dance performance involving 167 dancers.',
+    text: '100 students participated in the world record event organised by the Jackhi Book of World Records, alongside artists from all over the globe.',
   },
   {
     id: 'international',
