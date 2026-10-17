@@ -1,0 +1,284 @@
+/* Gallery sections. Shared light-section styles live in
+   components/layout/LightPage.css. */
+
+.light-page > .gallery-intro {
+  padding-bottom: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  text-align: center;
+  background:
+    radial-gradient(55% 70% at 50% 30%, rgb(232 204 145 / 0.18), transparent 70%),
+    var(--c-ivory);
+}
+
+.gallery-intro__title {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 1.6rem + 3.4vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1.06;
+  color: var(--c-burgundy);
+  text-wrap: balance;
+}
+
+.gallery-intro__text {
+  margin: 1.5rem auto 0;
+}
+
+.gallery-intro__jasmine {
+  display: none;
+  top: 1.5rem;
+  left: -1.5rem;
+  width: 10rem;
+  opacity: 0.5;
+  transform: scaleX(-1) rotate(-10deg);
+}
+
+@media (min-width: 75em) {
+  .gallery-intro__jasmine {
+    display: block;
+  }
+}
+
+/* Masonry wall: photographs keep their natural proportions. */
+.light-page > .gallery-wall {
+  padding-top: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+  background: var(--c-ivory);
+}
+
+.gallery-wall .page-container {
+  max-width: 82rem;
+}
+
+.gallery-grid {
+  columns: 2;
+  column-gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 64em) {
+  .gallery-grid {
+    columns: 3;
+  }
+}
+
+.gallery-grid__item {
+  margin-bottom: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+  break-inside: avoid;
+}
+
+.gallery-photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0.35rem;
+  overflow: hidden;
+  border: 1px solid rgb(198 163 101 / 0.5);
+  background: #fffcf7;
+  cursor: zoom-in;
+}
+
+.gallery-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #efe3cf;
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.4s ease;
+}
+
+.gallery-photo__view {
+  position: absolute;
+  left: 50%;
+  bottom: 1.25rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid rgb(232 204 145 / 0.8);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-ivory);
+  background: rgb(29 16 21 / 0.6);
+  opacity: 0;
+  transform: translate(-50%, 0.5rem);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .gallery-photo:hover img {
+    transform: scale(1.03);
+  }
+
+  .gallery-photo:hover .gallery-photo__view {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.gallery-photo:focus-visible .gallery-photo__view {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Closing invitation */
+.light-page > .gallery-cta {
+  padding-block: clamp(3rem, 2.25rem + 3vw, 4.5rem) clamp(4rem, 3rem + 4vw, 6rem);
+  text-align: center;
+  background: var(--c-ivory);
+}
+
+.gallery-cta__text {
+  margin-inline: auto;
+}
+
+.gallery-cta .btn {
+  margin-top: 1.5rem;
+}
+
+/* Lightbox ---------------------------------------------------------------- */
+.lightbox {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: clamp(3.5rem, 2rem + 5vw, 4.5rem) clamp(0.75rem, 0.5rem + 4vw, 5rem);
+  border: 0;
+  background: rgb(16 13 13 / 0.94);
+}
+
+.lightbox[open] {
+  display: grid;
+  place-items: center;
+  animation: lightbox-in 0.3s ease-out both;
+}
+
+.lightbox::backdrop {
+  background: transparent;
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.lightbox__figure {
+  display: grid;
+  justify-items: center;
+  gap: 0.85rem;
+  margin: 0;
+  max-height: 100%;
+}
+
+.lightbox__image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 72rem);
+  max-height: calc(100svh - 9rem);
+  border: 1px solid rgb(198 163 101 / 0.4);
+}
+
+.lightbox__caption {
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  color: rgb(245 235 221 / 0.75);
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+  border: 1px solid rgb(232 204 145 / 0.5);
+  border-radius: 50%;
+  color: var(--c-ivory);
+  background: rgb(29 16 21 / 0.7);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.lightbox__close:hover,
+.lightbox__nav:hover {
+  border-color: var(--c-gold-warm);
+  color: var(--c-gold-warm);
+}
+
+.lightbox__close {
+  top: max(0.75rem, env(safe-area-inset-top));
+  right: max(0.75rem, env(safe-area-inset-right));
+}
+
+.lightbox__close-icon,
+.lightbox__close-icon::before {
+  display: block;
+  width: 1.1rem;
+  height: 1.5px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.lightbox__close-icon::before {
+  content: '';
+  transform: rotate(90deg);
+}
+
+.lightbox__nav {
+  top: 50%;
+  font-size: 1.7rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.lightbox__nav--prev {
+  left: max(0.75rem, env(safe-area-inset-left));
+}
+
+.lightbox__nav--next {
+  right: max(0.75rem, env(safe-area-inset-right));
+}
+
+/* On phones the arrows sit below the photo instead of over it. */
+@media (max-width: 40em) {
+  .lightbox__nav {
+    top: auto;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    transform: none;
+  }
+
+  .lightbox__nav--prev {
+    left: calc(50% - 3.5rem);
+  }
+
+  .lightbox__nav--next {
+    right: calc(50% - 3.5rem);
+  }
+}
+
+.lightbox :focus-visible {
+  outline-color: var(--c-gold-warm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-photo img,
+  .gallery-photo__view {
+    transition: none;
+  }
+
+  .gallery-photo:hover img {
+    transform: none;
+  }
+
+  .lightbox[open] {
+    animation: none;
+  }
+}

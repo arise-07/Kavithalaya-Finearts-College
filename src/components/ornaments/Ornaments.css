@@ -1,0 +1,78 @@
+/* Decorative ornaments never take part in layout or interaction. */
+.ornament {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ornament--divider {
+  position: static;
+  width: 13.75rem;
+  max-width: 70%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.ornament--kolam {
+  height: 24px;
+  opacity: 0.35;
+}
+
+/* The lamp sways a degree or two from its hook, very slowly. */
+.ornament__sway {
+  transform-origin: 40px 0;
+  animation: lamp-sway 7s ease-in-out infinite alternate;
+}
+
+.ornament__glow {
+  animation: lamp-glow 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes lamp-sway {
+  from {
+    transform: rotate(-1.4deg);
+  }
+  to {
+    transform: rotate(1.4deg);
+  }
+}
+
+@keyframes lamp-glow {
+  from {
+    opacity: 0.65;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ornament__sway,
+  .ornament__glow {
+    animation: none;
+  }
+}
+
+/* Temple bells hang from a narrower drawing than the lamps. */
+.ornament__sway--bell {
+  transform-origin: 30px 0;
+  animation-duration: 6s;
+}
+
+/* Gold lotus medallion straddling the line between two sections. */
+.section-seam {
+  position: relative;
+  z-index: 5;
+  height: 0;
+  pointer-events: none;
+}
+
+.ornament--seam {
+  top: 0;
+  left: 50%;
+  width: min(20rem, 80vw);
+  height: auto;
+  transform: translate(-50%, -50%);
+}

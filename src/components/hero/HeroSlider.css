@@ -1,0 +1,219 @@
+/* Timing shared with Hero.jsx: 6 s per slide, 1.2 s crossfade. The zoom runs
+   for the slide plus its crossfade so it never stops while still visible. */
+.hero-backdrop {
+  --slide: 6s;
+  --fade: 1.2s;
+
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--c-charcoal);
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--fade) ease-in-out;
+}
+
+/* The incoming slide fades in above the outgoing one, which stays opaque
+   underneath until the fade completes. When the visitor jumps back to that
+   outgoing slide, the current one fades out on top instead. */
+.hero-slide.is-active {
+  z-index: 2;
+  opacity: 1;
+}
+
+.hero-slide.is-previous {
+  z-index: 1;
+  opacity: 1;
+}
+
+.hero-slide.is-leaving {
+  z-index: 3;
+  opacity: 0;
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--pos-mobile);
+  transform-origin: var(--focus);
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .hero-slide img {
+    object-position: var(--pos);
+  }
+}
+
+/* Portrait phones: the image fills the upper part of the hero so the
+   dancer's face and hands sit above the copy; the lower part blends into
+   charcoal beneath the text. */
+@media (max-width: 47.99em) and (max-aspect-ratio: 1/1) {
+  .hero-slide {
+    inset: 0 0 auto;
+    height: 80%;
+  }
+}
+
+/* Slow Ken Burns movement, alternating in and out with a slight drift. */
+.hero-backdrop.is-playing :is(.is-active, .is-previous, .is-leaving) img {
+  animation: var(--kb) calc(var(--slide) + var(--fade)) linear both;
+}
+
+.hero-slide--in {
+  --kb: hero-zoom-in;
+}
+
+.hero-slide--out {
+  --kb: hero-zoom-out;
+}
+
+.hero-backdrop.is-held img {
+  animation-play-state: paused;
+}
+
+@keyframes hero-zoom-in {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(-1.2%, 0, 0);
+  }
+}
+
+@keyframes hero-zoom-out {
+  from {
+    transform: scale(1.08) translate3d(1.2%, 0, 0);
+  }
+  to {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+/* Burgundy and charcoal shading for legible text over every image: heavy
+   beneath the copy, light over the dancers. */
+.hero-backdrop__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background:
+    linear-gradient(180deg, rgb(16 13 13 / 0.55) 0%, rgb(16 13 13 / 0) 20%),
+    linear-gradient(
+      180deg,
+      rgb(29 16 21 / 0) 36%,
+      rgb(29 16 21 / 0.7) 58%,
+      rgb(16 13 13 / 0.96) 78%,
+      rgb(16 13 13 / 1) 100%
+    ),
+    rgb(53 21 31 / 0.16);
+}
+
+@media (min-width: 48em) and (min-aspect-ratio: 1/1) {
+  .hero-backdrop__shade {
+    background:
+      linear-gradient(180deg, rgb(16 13 13 / 0.55) 0%, rgb(16 13 13 / 0) 22%),
+      linear-gradient(0deg, rgb(16 13 13 / 0.8) 0%, rgb(16 13 13 / 0) 30%),
+      linear-gradient(
+        90deg,
+        rgb(16 13 13 / 0.9) 0%,
+        rgb(29 16 21 / 0.78) 28%,
+        rgb(29 16 21 / 0.36) 52%,
+        rgb(29 16 21 / 0.06) 76%
+      ),
+      rgb(53 21 31 / 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-backdrop {
+    --fade: 0.6s;
+  }
+
+  .hero-backdrop.is-playing :is(.is-active, .is-previous, .is-leaving) img {
+    animation: none;
+  }
+}
+
+/* Controls --------------------------------------------------------------- */
+.slide-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.slide-controls__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slide-dot,
+.slide-controls__toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--c-ivory);
+  cursor: pointer;
+}
+
+.slide-dot__bar {
+  position: relative;
+  width: 1.75rem;
+  height: 2px;
+  overflow: hidden;
+  background: rgb(245 235 221 / 0.35);
+  transition: background-color 0.4s ease;
+}
+
+.slide-dot:hover .slide-dot__bar {
+  background: rgb(245 235 221 / 0.65);
+}
+
+.slide-dot.is-active .slide-dot__bar {
+  background: var(--c-gold);
+}
+
+/* While playing, the active bar fills in warm gold over the slide's time. */
+.slide-dot.is-active:has(.slide-dot__fill) .slide-dot__bar {
+  background: rgb(198 163 101 / 0.45);
+}
+
+.slide-dot__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--c-gold-warm);
+  transform-origin: left;
+  animation: slide-progress linear both;
+}
+
+@keyframes slide-progress {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.slide-controls__icon {
+  display: block;
+  width: 0.6rem;
+  height: 0.7rem;
+  border-inline: 2px solid currentColor;
+  opacity: 0.8;
+}
+
+.slide-controls__icon.is-play {
+  width: 0;
+  height: 0;
+  border-block: 0.4rem solid transparent;
+  border-inline: 0.65rem solid currentColor;
+  border-right-width: 0;
+}

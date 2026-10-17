@@ -1,0 +1,86 @@
+/* Shared styles for the site's light sections (Our Story, Classes): ivory
+   and cream grounds, burgundy headings, charcoal text, antique gold kept to
+   fine details. */
+
+.light-page {
+  /* Antique gold is too light for small text on cream; this deeper bronze
+     keeps gold-toned labels at AA contrast. */
+  --c-gold-ink: #876734;
+
+  display: block;
+  color: var(--c-ink);
+  background: var(--c-cream);
+}
+
+.light-page :focus-visible {
+  outline-color: var(--c-burgundy);
+}
+
+.light-page > section {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4rem, 2.75rem + 5vw, 7.5rem);
+}
+
+/* Ornaments are clipped to their section, so they can never cause
+   horizontal scrolling. */
+@supports (overflow: clip) {
+  .light-page > section {
+    overflow: clip;
+  }
+}
+
+.page-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left)) max(var(--gutter), env(safe-area-inset-right));
+}
+
+.page-container--narrow {
+  max-width: 50rem;
+}
+
+/* Type -------------------------------------------------------------------- */
+.page-eyebrow {
+  margin: 0 0 1rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--c-gold-ink);
+}
+
+.page-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.45rem + 2.3vw, 3.1rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--c-burgundy);
+  text-wrap: balance;
+}
+
+.page-body {
+  max-width: 38rem;
+  margin: 1.1rem 0 0;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.075rem);
+  line-height: 1.8;
+  color: var(--c-ink);
+  text-wrap: pretty;
+}
+
+.page-section-head {
+  margin-bottom: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  text-align: center;
+}
+
+.page-section-head .ornament--divider {
+  margin-top: 1.25rem;
+}
+
+.page-section-head__intro {
+  margin-inline: auto;
+}

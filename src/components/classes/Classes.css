@@ -1,0 +1,291 @@
+/* Our Classes sections. Shared light-section styles live in
+   components/layout/LightPage.css. */
+
+/* Intro ------------------------------------------------------------------- */
+.light-page > .classes-intro {
+  padding-bottom: clamp(2.5rem, 2rem + 2vw, 4rem);
+  text-align: center;
+  background:
+    radial-gradient(55% 70% at 50% 30%, rgb(232 204 145 / 0.2), transparent 70%),
+    var(--c-cream);
+}
+
+.classes-intro__title {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.7rem + 3.5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.06;
+  color: var(--c-burgundy);
+  text-wrap: balance;
+}
+
+/* Lines break only between the two phrases. */
+.classes-intro__phrase {
+  white-space: nowrap;
+}
+
+.classes-intro__text {
+  margin: 1.5rem auto 0;
+  font-size: clamp(1.02rem, 0.97rem + 0.3vw, 1.15rem);
+}
+
+.classes-intro__lotus {
+  top: 50%;
+  left: 50%;
+  width: min(30rem, 105vw);
+  opacity: 0.08;
+  transform: translate(-50%, -50%);
+}
+
+.classes-intro__jasmine {
+  display: none;
+  right: -1.5rem;
+  bottom: -0.25rem;
+  width: 11rem;
+  opacity: 0.5;
+}
+
+@media (min-width: 75em) {
+  .classes-intro__jasmine {
+    display: block;
+  }
+}
+
+/* Course grid ------------------------------------------------------------- */
+.light-page > .classes-list {
+  padding-top: clamp(1.5rem, 1rem + 2vw, 3rem);
+  background: var(--c-cream);
+}
+
+/* The grid gets a wider measure than the page text so the cards can be large. */
+.classes-list .page-container {
+  max-width: 82rem;
+}
+
+.course-grid {
+  display: grid;
+  gap: clamp(3rem, 2.5rem + 1.5vw, 4rem) clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 36em) {
+  .course-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Three larger cards per row on laptops and desktops. */
+@media (min-width: 62em) {
+  .course-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.course {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Fine gold frame around each photograph. */
+.course__frame {
+  padding: 0.35rem;
+  background: #fffcf7;
+  border: 1px solid rgb(198 163 101 / 0.5);
+}
+
+.course__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  /* Soft tint while a photograph is still loading. */
+  background: #efe3cf;
+}
+
+.course__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Ornamental panel for a class whose photograph is still to come. */
+.course__media--art {
+  background:
+    radial-gradient(70% 70% at 50% 45%, rgb(198 163 101 / 0.22), transparent 70%),
+    linear-gradient(160deg, var(--c-burgundy), var(--c-burgundy-deep));
+}
+
+.course__lotus {
+  top: 50%;
+  left: 50%;
+  width: 62%;
+  opacity: 0.55;
+  transform: translate(-50%, -50%);
+}
+
+.course__number {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.4rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1;
+  color: var(--c-gold-ink);
+}
+
+.course__number::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgb(198 163 101 / 0.45);
+}
+
+.course__name {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 1.35rem + 0.6vw, 1.95rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--c-burgundy);
+}
+
+.course__description {
+  flex: 1;
+  margin: 0.55rem 0 0;
+  font-size: clamp(0.98rem, 0.95rem + 0.15vw, 1.05rem);
+  line-height: 1.7;
+  color: var(--c-ink);
+}
+
+.course__enquire {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  margin-top: 0.6rem;
+  padding: 0;
+  border: 0;
+  background:
+    linear-gradient(var(--c-gold), var(--c-gold)) left calc(100% - 0.55rem) / 0 1px no-repeat;
+  font: 500 0.74rem/1.2 var(--font-body);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-burgundy);
+  cursor: pointer;
+  transition:
+    background-size 0.3s ease,
+    color 0.2s ease;
+}
+
+.course__arrow {
+  letter-spacing: 0;
+  transition: transform 0.3s ease;
+}
+
+.course__enquire:hover,
+.course__enquire:focus-visible {
+  background-size: calc(100% - 1.2rem) 1px;
+  color: var(--c-gold-ink);
+}
+
+.course__enquire:hover .course__arrow,
+.course__enquire:focus-visible .course__arrow {
+  transform: translateX(0.25rem);
+}
+
+@media (hover: hover) {
+  .course:hover .course__media img {
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course__media img,
+  .course__arrow {
+    transition: none;
+  }
+
+  .course:hover .course__media img {
+    transform: none;
+  }
+}
+
+/* Closing call to action -------------------------------------------------- */
+.light-page > .classes-cta {
+  padding-block: clamp(3.5rem, 2.5rem + 3vw, 5rem);
+  text-align: center;
+  background: var(--c-ivory);
+}
+
+.classes-cta__kolam {
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.classes-cta__text {
+  margin-inline: auto;
+}
+
+.classes-cta .btn {
+  margin-top: 1.75rem;
+}
+
+/* Decorative accents in the wide margins ------------------------------------ */
+.classes-intro__ghungroo,
+.classes-intro__lamp,
+.classes-cta__bell {
+  display: none;
+}
+
+.classes-intro__ghungroo {
+  top: 1.25rem;
+  left: -1rem;
+  width: 15rem;
+  height: auto;
+  opacity: 0.75;
+}
+
+.classes-intro__lamp {
+  top: 0;
+  right: clamp(2rem, 8vw, 9rem);
+  width: 3.25rem;
+  opacity: 0.85;
+}
+
+.classes-cta__bell {
+  top: 0;
+  width: 2.4rem;
+  height: auto;
+  opacity: 0.85;
+}
+
+.classes-cta__bell--left {
+  left: clamp(2rem, 8vw, 9rem);
+}
+
+.classes-cta__bell--right {
+  right: clamp(2rem, 8vw, 9rem);
+}
+
+@media (min-width: 64em) {
+  .classes-intro__lamp,
+  .classes-cta__bell {
+    display: block;
+  }
+}
+
+@media (min-width: 75em) {
+  .classes-intro__ghungroo {
+    display: block;
+  }
+}

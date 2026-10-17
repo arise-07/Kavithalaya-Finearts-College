@@ -1,0 +1,199 @@
+/* Global foundations for Kavithalaya Naatiyapalli. Component styles live
+   beside their components. */
+
+:root {
+  --c-burgundy: #35151f;
+  --c-burgundy-deep: #1d1015;
+  --c-gold: #c6a365;
+  --c-gold-warm: #e8cc91;
+  --c-ivory: #f5ebdd;
+  --c-charcoal: #100d0d;
+  --c-cream: #fff9f0;
+  --c-ink: #30272a;
+
+  --font-display: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+  --font-body: 'Jost Variable', 'Jost', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --container: 90rem;
+  --gutter: clamp(1rem, 4.5vw, 4.5rem);
+  --header-h: 4.75rem;
+  --logo-h: 3.75rem;
+
+  color-scheme: dark;
+}
+
+@media (min-width: 48em) {
+  :root {
+    --header-h: 5.75rem;
+    --logo-h: 4.75rem;
+  }
+}
+
+@media (min-width: 64em) {
+  :root {
+    --header-h: 7.25rem;
+    --logo-h: 6.25rem;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--c-charcoal);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 20rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--c-ivory);
+  background: var(--c-charcoal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-gold-warm);
+  outline-offset: 3px;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* In-page links land just below the fixed header. */
+main [id] {
+  scroll-margin-top: calc(var(--header-h) + env(safe-area-inset-top));
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: calc(0.75rem + env(safe-area-inset-top));
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.75rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--c-charcoal);
+  background: var(--c-gold-warm);
+  transform: translateY(calc(-100% - 2rem));
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Shared buttons ---------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  font-family: inherit;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 3rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.btn__icon {
+  flex: none;
+}
+
+.btn--primary {
+  background: var(--c-gold);
+  color: var(--c-charcoal);
+}
+
+.btn--primary:hover {
+  background: var(--c-gold-warm);
+}
+
+.btn--secondary {
+  border-color: rgb(245 235 221 / 0.55);
+  background: rgb(16 13 13 / 0.3);
+  color: var(--c-ivory);
+}
+
+.btn--secondary:hover {
+  border-color: var(--c-gold-warm);
+  color: var(--c-gold-warm);
+}
+
+/* For light backgrounds. */
+.btn--burgundy {
+  background: var(--c-burgundy);
+  color: var(--c-ivory);
+}
+
+.btn--burgundy:hover {
+  background: #4b1f2c;
+  color: var(--c-gold-warm);
+}
+
+/* The opening intro sits above the page and fades away when it finishes. */
+.intro-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  /* Never intercept clicks, including during the fade-out. */
+  pointer-events: none;
+  transition: opacity 0.9s ease;
+}
+
+.intro-layer.is-leaving {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .intro-layer {
+    transition-duration: 0.3s;
+  }
+}

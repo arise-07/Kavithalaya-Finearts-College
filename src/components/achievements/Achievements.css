@@ -1,0 +1,510 @@
+/* Achievements sections — a temple-arch theme: a doorway arch behind the
+   opening, arch-topped highlight panels, a horizontal journey line and an
+   invitation-style closing frame. Shared light-section styles live in
+   components/layout/LightPage.css. */
+
+/* Burgundy bands (opening and closing) -------------------------------------- */
+.light-page > .ach-dark {
+  text-align: center;
+  color: var(--c-ivory);
+  background:
+    radial-gradient(60% 80% at 50% 55%, rgb(198 163 101 / 0.14), transparent 70%),
+    linear-gradient(180deg, var(--c-burgundy) 0%, var(--c-burgundy-deep) 100%);
+}
+
+.ach-dark .page-eyebrow {
+  color: var(--c-gold-warm);
+}
+
+.ach-dark :focus-visible {
+  outline-color: var(--c-gold-warm);
+}
+
+/* Opening: split layout — copy behind a gold rule, beside a slowly turning
+   lotus-and-kolam medallion. --------------------------------------------- */
+.light-page > .ach-opening {
+  padding-block: clamp(4.5rem, 3rem + 5vw, 7.5rem);
+}
+
+/* Fine gold rules frame the band top and bottom. */
+
+.ach-opening::before,
+.ach-opening::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(198 163 101 / 0.55) 20%, rgb(198 163 101 / 0.55) 80%, transparent);
+}
+
+.ach-opening::before {
+  top: 1.1rem;
+}
+
+.ach-opening::after {
+  bottom: 1.1rem;
+}
+
+.ach-opening__inner {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+  justify-items: center;
+  max-width: 76rem;
+}
+
+.ach-opening__copy {
+  max-width: 38rem;
+  text-align: center;
+}
+
+.ach-opening__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.6rem);
+  font-weight: 500;
+  line-height: 1.04;
+  color: var(--c-ivory);
+}
+
+.ach-opening__title em {
+  display: block;
+  font-style: italic;
+  color: var(--c-gold-warm);
+}
+
+.ach-opening__text {
+  margin: 1.5rem 0 0;
+  font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem);
+  font-weight: 350;
+  line-height: 1.8;
+  color: rgb(245 235 221 / 0.86);
+}
+
+/* Medallion */
+.ach-opening__medallion {
+  position: relative;
+  width: clamp(12rem, 9rem + 14vw, 22rem);
+  aspect-ratio: 1;
+}
+
+.ach-opening__ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(198 163 101 / 0.55);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(198 163 101 / 0.16), transparent 68%);
+}
+
+.ach-opening__ring::before {
+  content: '';
+  position: absolute;
+  inset: 0.6rem;
+  border: 1px dashed rgb(198 163 101 / 0.35);
+  border-radius: 50%;
+}
+
+.ach-opening__lotus,
+.ach-opening__kolam {
+  top: 50%;
+  left: 50%;
+}
+
+.ach-opening__lotus {
+  width: 92%;
+  opacity: 0.55;
+  transform: translate(-50%, -50%);
+  animation: medallion-turn 120s linear infinite;
+}
+
+.ach-opening__kolam {
+  width: 38%;
+  opacity: 0.75;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+@keyframes medallion-turn {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media (min-width: 56em) {
+  .ach-opening__inner {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: clamp(3rem, 2rem + 4vw, 6rem);
+    justify-items: start;
+  }
+
+  .ach-opening__copy {
+    order: -1;
+    padding-left: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+    text-align: left;
+    border-left: 1px solid rgb(198 163 101 / 0.6);
+  }
+
+  .ach-opening__medallion {
+    justify-self: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ach-opening__lotus {
+    animation: none;
+  }
+}
+
+/* Recognition: three arch-topped panels ------------------------------------ */
+.ach-recognition {
+  background:
+    radial-gradient(50% 40% at 50% 70%, rgb(232 204 145 / 0.18), transparent 70%),
+    var(--c-ivory);
+}
+
+.highlights {
+  display: grid;
+  gap: 2rem;
+  max-width: 24rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 64em) {
+  .highlights {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+    max-width: 68rem;
+  }
+}
+
+.highlight {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3.25rem clamp(1.5rem, 1rem + 1.5vw, 2.25rem) 2.25rem;
+  text-align: center;
+  background: var(--c-cream);
+  border: 1px solid rgb(198 163 101 / 0.6);
+  border-radius: 12rem 12rem 0 0;
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Inner arch line, as on a carved doorway. */
+.highlight::before {
+  content: '';
+  position: absolute;
+  inset: 0.5rem 0.5rem 0;
+  border: 1px solid rgb(198 163 101 / 0.28);
+  border-bottom: 0;
+  border-radius: 11.5rem 11.5rem 0 0;
+  pointer-events: none;
+}
+
+.highlight:hover {
+  border-color: var(--c-gold);
+  transform: translateY(-0.25rem);
+}
+
+.highlight__mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.highlight__icon {
+  display: grid;
+  place-items: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  border: 1px solid rgb(198 163 101 / 0.75);
+  border-radius: 50%;
+  color: var(--c-gold-warm);
+  background: var(--c-burgundy);
+}
+
+.highlight__icon .achievement-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.highlight__index {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1;
+  color: var(--c-gold-ink);
+}
+
+.highlight__title {
+  margin: 1.1rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.35rem + 0.6vw, 1.8rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--c-burgundy);
+  text-wrap: balance;
+}
+
+/* A short gold rule between title and text. */
+.highlight__title::after {
+  content: '';
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  margin: 1rem auto 0;
+  background: var(--c-gold);
+}
+
+.highlight__text {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--c-ink);
+}
+
+/* Journey: two milestones on a gold line ------------------------------------ */
+.ach-growth {
+  background: var(--c-cream);
+}
+
+.ach-growth .page-container--narrow {
+  max-width: 62rem;
+}
+
+.milestones {
+  position: relative;
+  display: grid;
+  gap: 2.5rem;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 0 0 0 2.75rem;
+  list-style: none;
+}
+
+/* Vertical rail on phones. */
+.milestones::before {
+  content: '';
+  position: absolute;
+  top: 0.4rem;
+  bottom: 0;
+  left: 0.6rem;
+  width: 1px;
+  background: linear-gradient(to bottom, rgb(198 163 101 / 0.85) 80%, rgb(198 163 101 / 0));
+}
+
+.milestone {
+  position: relative;
+}
+
+.milestone__marker {
+  position: absolute;
+  top: 0.55rem;
+  left: -2.15rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: var(--c-cream);
+  border: 1px solid var(--c-gold);
+  box-shadow: 0 0 0 0.3rem var(--c-cream);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.milestone__marker::after {
+  content: '';
+  position: absolute;
+  inset: 0.2rem;
+  background: var(--c-gold);
+}
+
+.milestone__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 1.3rem + 0.6vw, 1.8rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--c-burgundy);
+}
+
+.milestone__text {
+  margin: 0.55rem 0 0;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.075rem);
+  line-height: 1.75;
+  color: var(--c-ink);
+}
+
+/* Side by side on a horizontal gold line from tablets up. */
+@media (min-width: 48em) {
+  .milestones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    max-width: none;
+    padding: 2.5rem 0 0;
+    text-align: center;
+  }
+
+  .milestones::before {
+    top: 0.45rem;
+    bottom: auto;
+    left: 25%;
+    right: 25%;
+    width: auto;
+    height: 1px;
+    background: rgb(198 163 101 / 0.85);
+  }
+
+  .milestone__marker {
+    top: -2.05rem;
+    left: 50%;
+  }
+
+  .milestone__text {
+    max-width: 26rem;
+    margin-inline: auto;
+  }
+}
+
+/* Closing: an invitation-style double frame --------------------------------- */
+.light-page > .ach-cta {
+  padding-block: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+}
+
+.ach-cta__frame {
+  max-width: 48rem;
+  padding-block: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+  outline: 1px solid rgb(198 163 101 / 0.6);
+  outline-offset: -0.5rem;
+  box-shadow: inset 0 0 0 1px rgb(198 163 101 / 0.3);
+}
+
+@media (max-width: 30em) {
+  .ach-cta__frame {
+    width: calc(100% - 2rem);
+    padding-inline: 1.25rem;
+  }
+}
+
+.ach-cta .ornament--divider {
+  margin-bottom: 1.75rem;
+}
+
+.ach-cta__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.45rem + 2.4vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--c-ivory);
+  text-wrap: balance;
+}
+
+.ach-cta__text {
+  max-width: 32rem;
+  margin: 1.25rem auto 0;
+  font-size: clamp(1rem, 0.96rem + 0.25vw, 1.125rem);
+  font-weight: 350;
+  line-height: 1.75;
+  color: rgb(245 235 221 / 0.85);
+}
+
+.ach-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 2rem;
+  margin-top: 2.25rem;
+}
+
+.ach-cta__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--c-gold-warm);
+  background: linear-gradient(currentColor, currentColor) left calc(100% - 0.6rem) / 0 1px no-repeat;
+  transition: background-size 0.3s ease;
+}
+
+.ach-cta__link:hover,
+.ach-cta__link:focus-visible {
+  background-size: calc(100% - 1.3rem) 1px;
+}
+
+.ach-cta__arrow {
+  letter-spacing: 0;
+  transition: transform 0.3s ease;
+}
+
+.ach-cta__link:hover .ach-cta__arrow,
+.ach-cta__link:focus-visible .ach-cta__arrow {
+  transform: translateX(0.25rem);
+}
+
+/* Decorative accents in the wide margins ------------------------------------ */
+.ach-recognition__kolam,
+.ach-cta__bell {
+  display: none;
+}
+
+.ach-recognition__kolam {
+  top: 26%;
+  width: 8.5rem;
+  opacity: 0.18;
+}
+
+.ach-recognition__kolam--left {
+  left: 3%;
+}
+
+.ach-recognition__kolam--right {
+  right: 3%;
+}
+
+.ach-cta__bell {
+  top: 0;
+  width: 2.4rem;
+  height: auto;
+  opacity: 0.9;
+}
+
+.ach-cta__bell--left {
+  left: clamp(2rem, 8vw, 9rem);
+}
+
+.ach-cta__bell--right {
+  right: clamp(2rem, 8vw, 9rem);
+}
+
+@media (min-width: 64em) {
+  .ach-cta__bell {
+    display: block;
+  }
+}
+
+@media (min-width: 75em) {
+  .ach-recognition__kolam {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .highlight,
+  .ach-cta__link,
+  .ach-cta__arrow {
+    transition: none;
+  }
+
+  .highlight:hover {
+    transform: none;
+  }
+}
