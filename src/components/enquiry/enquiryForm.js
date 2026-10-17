@@ -97,12 +97,13 @@ export function buildEnquiryMessage(values, course) {
   ].join('\n')
 }
 
-/** Errors for the contact form: name and mobile required, email optional. */
+/** Errors for the contact form: name, mobile, email and class required. */
 export function validateContact(values) {
   const errors = {
     fullName: checkName(values.fullName),
     mobile: checkMobile(values.mobile),
-    email: checkEmail(values.email, { required: false }),
+    email: checkEmail(values.email),
+    course: values.course ? undefined : 'Please choose a class.',
   }
   return Object.fromEntries(Object.entries(errors).filter(([, message]) => message))
 }

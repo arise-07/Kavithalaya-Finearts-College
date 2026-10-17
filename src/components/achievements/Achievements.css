@@ -423,6 +423,10 @@
 .ach-cta__link {
   display: inline-flex;
   align-items: center;
+  padding: 0;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
   gap: 0.5rem;
   min-height: 2.75rem;
   font-size: 0.78rem;

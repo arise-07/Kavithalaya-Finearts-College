@@ -219,31 +219,91 @@
   }
 }
 
-/* Closing call to action -------------------------------------------------- */
-.light-page > .classes-cta {
-  padding-block: clamp(3.5rem, 2.5rem + 3vw, 5rem);
-  text-align: center;
-  background: var(--c-ivory);
+/* Enquiry panel beneath the grid ------------------------------------------- */
+/* A dark burgundy strip with an inset gold hairline, echoing the hero:
+   message on the left, the two enquiry paths on the right (stacked on
+   phones). */
+.classes-help {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  gap: 1.5rem;
+  margin-top: clamp(3.5rem, 2.5rem + 3vw, 5rem);
+  padding: clamp(1.75rem, 1.25rem + 2vw, 2.75rem) clamp(1.5rem, 1rem + 2.5vw, 3.5rem);
+  color: var(--c-ivory);
+  background:
+    radial-gradient(60% 140% at 100% 50%, rgb(198 163 101 / 0.14), transparent 70%),
+    linear-gradient(100deg, var(--c-burgundy-deep), var(--c-burgundy));
+  border-radius: 2px;
+  box-shadow: 0 24px 48px -28px rgb(29 16 21 / 0.6);
 }
 
-.classes-cta__kolam {
-  top: 0;
-  left: 0;
-  width: 100%;
+.classes-help::before {
+  content: '';
+  position: absolute;
+  inset: 0.5rem;
+  z-index: -1;
+  border: 1px solid rgb(198 163 101 / 0.35);
+  pointer-events: none;
 }
 
-.classes-cta__text {
-  margin-inline: auto;
+.classes-help__lotus {
+  position: absolute;
+  right: -1.5rem;
+  bottom: -2.5rem;
+  z-index: -1;
+  width: 11rem;
+  height: auto;
+  color: var(--c-gold);
+  opacity: 0.12;
 }
 
-.classes-cta .btn {
-  margin-top: 1.75rem;
+.classes-help__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--c-ivory);
+}
+
+.classes-help__body {
+  max-width: 34rem;
+  margin: 0.6rem 0 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgb(245 235 221 / 0.8);
+}
+
+.classes-help__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 30em) {
+  .classes-help__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 62em) {
+  .classes-help {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .classes-help__actions {
+    flex-wrap: nowrap;
+  }
 }
 
 /* Decorative accents in the wide margins ------------------------------------ */
 .classes-intro__ghungroo,
-.classes-intro__lamp,
-.classes-cta__bell {
+.classes-intro__lamp {
   display: none;
 }
 
@@ -262,24 +322,8 @@
   opacity: 0.85;
 }
 
-.classes-cta__bell {
-  top: 0;
-  width: 2.4rem;
-  height: auto;
-  opacity: 0.85;
-}
-
-.classes-cta__bell--left {
-  left: clamp(2rem, 8vw, 9rem);
-}
-
-.classes-cta__bell--right {
-  right: clamp(2rem, 8vw, 9rem);
-}
-
 @media (min-width: 64em) {
-  .classes-intro__lamp,
-  .classes-cta__bell {
+  .classes-intro__lamp {
     display: block;
   }
 }

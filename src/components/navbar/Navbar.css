@@ -152,6 +152,12 @@
 }
 
 /* Navigation: a dropdown panel on small screens -------------------------- */
+/* Taken out of the header row (its panel is fixed-position anyway), so it
+   adds no gap and the menu button sits flush with the right gutter. */
+.site-nav {
+  position: absolute;
+}
+
 .site-nav__menu {
   display: none;
   position: fixed;
@@ -246,6 +252,10 @@
 @media (min-width: 75em) {
   .menu-toggle {
     display: none;
+  }
+
+  .site-nav {
+    position: static;
   }
 
   .site-nav__menu,

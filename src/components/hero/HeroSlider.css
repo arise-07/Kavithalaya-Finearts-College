@@ -36,6 +36,30 @@
   opacity: 0;
 }
 
+/* Alongside the crossfade, the incoming slide is revealed by a soft-edged
+   wipe from the right, where the dancers stand. It runs only while an
+   outgoing slide is still underneath, so the first slide never wipes. */
+.hero-backdrop:has(.is-previous) .hero-slide.is-active {
+  -webkit-mask-image: linear-gradient(to left, #000 40%, transparent 60%);
+  mask-image: linear-gradient(to left, #000 40%, transparent 60%);
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: hero-wipe var(--fade) cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes hero-wipe {
+  from {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+  }
+  to {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+}
+
 .hero-slide img {
   width: 100%;
   height: 100%;
@@ -137,6 +161,12 @@
   .hero-backdrop.is-playing :is(.is-active, .is-previous, .is-leaving) img {
     animation: none;
   }
+
+  .hero-backdrop:has(.is-previous) .hero-slide.is-active {
+    -webkit-mask-image: none;
+    mask-image: none;
+    animation: none;
+  }
 }
 
 /* Controls --------------------------------------------------------------- */
@@ -199,6 +229,43 @@
 @keyframes slide-progress {
   from {
     transform: scaleX(0);
+  }
+}
+
+/* Slide counter: "01 / 06" in the display face, current number in gold. */
+.slide-controls__count {
+  min-width: 4.5rem;
+  margin-right: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-gold-warm);
+  text-align: right;
+}
+
+.slide-controls__count span {
+  font-size: 0.8rem;
+  color: rgb(245 235 221 / 0.55);
+}
+
+/* Phones: narrower dots and counter so the row of controls always fits. */
+@media (max-width: 29.99em) {
+  .slide-controls__count {
+    min-width: 0;
+    font-size: 0.85rem;
+  }
+
+  .slide-dot {
+    width: 2rem;
+  }
+
+  .slide-dot__bar {
+    width: 1.35rem;
+  }
+
+  .slide-controls__toggle {
+    width: 2.5rem;
   }
 }
 

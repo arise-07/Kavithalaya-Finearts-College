@@ -18,13 +18,9 @@ export const BRAND = {
 // WhatsApp Web / Desktop elsewhere.
 const WHATSAPP_NUMBER = '916382285348'
 const WHATSAPP_DISPLAY = '+91 63822 85348'
-const ENQUIRY_MESSAGE =
-  'Hello Kavithalaya Naatiyapalli, I would like to know more about your classes and admission process.'
 
 export const whatsappUrl = (message) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
-
-export const WHATSAPP_URL = whatsappUrl(ENQUIRY_MESSAGE)
 
 // Contact details supplied by the academy.
 export const CONTACT = {

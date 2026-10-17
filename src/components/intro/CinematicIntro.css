@@ -1,14 +1,9 @@
 /* Kavithalaya Naatiyapalli — cinematic intro.
-   Every visual lives on its own absolutely positioned layer; all SVG layers
-   share one viewBox so they stay registered at any viewport size. */
+   Two image plates of the same temple (dark and lit) stacked on one camera
+   layer, a light bloom above them, and a vignette on top. */
 
 .ci {
-  --ci-gold: #c6a365;
-  --ci-gold-light: #e8cc91;
-  --ci-ivory: #f5ebdd;
   --ci-charcoal: #100d0d;
-  /* Stroke-width multiplier for the linework, raised on smaller layouts. */
-  --lw: 1;
 
   position: fixed;
   inset: 0;
@@ -20,158 +15,145 @@
   contain: strict;
 }
 
-.ci--medium {
-  --lw: 1.1;
-}
-
-.ci--tall {
-  --lw: 1.3;
-}
-
-.ci-stage {
+.ci-stage,
+.ci-layer {
   position: absolute;
   inset: 0;
 }
 
 .ci-layer {
-  position: absolute;
-  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
 }
 
 /* Layer order ------------------------------------------------------------ */
-.ci-atmosphere {
-  z-index: 10; /* 1. background atmosphere */
+.ci-plate--dark {
+  z-index: 10;
 }
-.ci-temple-far {
-  z-index: 20; /* 2. temple silhouette — distant gopurams */
-}
-.ci-temple-main {
-  z-index: 22; /* 2. temple silhouette — main gopuram, shrines, courtyard */
-}
-.ci-temple-light {
-  z-index: 30; /* 3. temple illumination */
-}
-.ci-plate {
-  z-index: 35; /* 7. final hero plate (sits behind the dancer) */
+.ci-plate--lit {
+  z-index: 20;
 }
 .ci-dancer {
-  z-index: 40; /* 4. dancer */
+  z-index: 25;
 }
-.ci-lines {
-  z-index: 50; /* 5. golden ornamental linework */
-}
-.ci-dust {
-  z-index: 60; /* 6. atmospheric particles */
-}
-.ci-final-light {
-  z-index: 70; /* 7. final illumination */
+.ci-bloom {
+  z-index: 30;
 }
 .ci-vignette {
-  z-index: 75;
+  z-index: 40;
 }
 
-/* Everything starts in darkness; the timeline brings each element in. */
-.ci-temple-far,
-.ci-temple-main,
-.ci-temple-light,
+/* Everything starts in darkness; the timeline brings each layer in. */
 .ci-plate,
 .ci-dancer,
-.ci-lines,
-.ci-dust,
-.ci-final-light,
-.ci-sky-glow,
-.ci-sky-core,
-.ci-temple-rim,
-.ci-temple-detail,
-.ci-temple-wash,
-.ci-door-glow,
-.ci-lamp {
+.ci-bloom {
   opacity: 0;
 }
 
-/* Only the continuously scaling layers are promoted, and only while playing. */
-.ci:not(.ci--complete) :is(.ci-temple-far, .ci-temple-main, .ci-temple-light, .ci-final-light) {
-  will-change: transform, opacity;
+/* The camera layer scales continuously, so it is promoted while playing. */
+.ci:not(.ci--complete) .ci-camera {
+  will-change: transform;
 }
 
-/* Final frame ------------------------------------------------------------ */
+/* Plates ----------------------------------------------------------------- */
 .ci-plate img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  animation: ci-plate-in 1.2s ease-out both;
 }
 
-@keyframes ci-plate-in {
-  from {
-    opacity: 0;
+/* The lit plate is shown through a soft-edged mask three times its height;
+   moving the mask from 0% to 100% carries the light from the temple's base
+   to the top of the gopuram. 100% (fully lit) is the resting state. */
+.ci-plate--lit {
+  --reveal: 100%;
+  -webkit-mask-image: linear-gradient(to top, #000 40%, transparent 60%);
+  mask-image: linear-gradient(to top, #000 40%, transparent 60%);
+  -webkit-mask-size: 100% 300%;
+  mask-size: 100% 300%;
+  -webkit-mask-position: 50% var(--reveal);
+  mask-position: 50% var(--reveal);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Dancers ---------------------------------------------------------------- */
+/* Gold sketches standing in the space either side of the temple, feet on
+   the temple's ground line. The sizes follow the wide plate under
+   object-fit: cover: the image is max(100vh, 56.25vw) tall, the temple is
+   48% of the image's width and its base sits at 86% of its height. Each
+   dancer fills most of its side gap, capped below the temple's height. */
+.ci-dancer {
+  --img-h: max(100vh, 56.25vw);
+  --gap: calc((100vw - max(48vw, 85.33vh)) / 2);
+  --w: min(calc(var(--gap) * 0.8), calc(var(--img-h) * 0.33));
+
+  position: absolute;
+  bottom: calc(50vh - 0.36 * var(--img-h));
+  width: var(--w);
+  height: auto;
+}
+
+.ci-dancer--left {
+  left: calc((var(--gap) - var(--w)) / 2);
+}
+
+.ci-dancer--right {
+  right: calc((var(--gap) - var(--w)) / 2);
+}
+
+/* Near-square screens have no room beside the temple. */
+@media (max-aspect-ratio: 5/4) {
+  .ci-dancer {
+    display: none;
   }
 }
 
-.ci-final-light {
+/* Portrait screens (the tall plates): the dancers stand side by side below
+   the temple. The tall plate is max(100vh, 177.78vw) tall under cover; each
+   dancer is 30% of that high, centred 10.7% of it either side of the
+   middle, feet at 85% of the plate's height. */
+@media (max-aspect-ratio: 4/5) {
+  .ci-dancer {
+    --img-h: max(100vh, 177.78vw);
+    --w: calc(var(--img-h) * 0.185);
+    --offset: calc(var(--img-h) * 0.107);
+
+    display: block;
+    bottom: calc(50vh - 0.35 * var(--img-h));
+  }
+
+  .ci-dancer--left {
+    left: calc(50vw - var(--offset) - var(--w) / 2);
+  }
+
+  .ci-dancer--right {
+    right: calc(50vw - var(--offset) - var(--w) / 2);
+  }
+}
+
+/* Light ------------------------------------------------------------------ */
+/* Centred on the gopuram: lower on the wide plates, higher on the tall ones
+   where the temple sits in the upper half. */
+.ci-bloom {
+  --bloom-y: 42%;
   background: radial-gradient(
-    60% 55% at 50% 46%,
-    rgba(232, 204, 145, 0.2),
-    rgba(198, 163, 101, 0.07) 45%,
-    transparent 72%
+    38% 48% at 50% var(--bloom-y),
+    rgba(232, 204, 145, 0.16),
+    rgba(198, 163, 101, 0.06) 50%,
+    transparent 75%
   );
+  mix-blend-mode: screen;
+}
+
+@media (max-aspect-ratio: 4/5) {
+  .ci-bloom {
+    --bloom-y: 30%;
+  }
 }
 
 .ci-vignette {
-  background: radial-gradient(130% 95% at 50% 45%, transparent 52%, rgba(16, 13, 13, 0.72) 100%);
-}
-
-/* Dancer ----------------------------------------------------------------- */
-.ci-dancer-rim {
-  stroke-width: 3.4px;
-  stroke-linejoin: round;
-}
-
-.ci-dancer-pulse {
-  opacity: 0;
-}
-
-.ci-dancer-ring {
-  stroke: var(--ci-gold-light);
-  stroke-width: 1px;
-  opacity: 0;
-}
-
-.ci-dancer-image {
-  filter: drop-shadow(0 0 1.5px rgba(232, 204, 145, 0.7));
-}
-
-/* Golden linework -------------------------------------------------------- */
-.lw-path {
-  fill: none;
-  stroke-linecap: butt;
-}
-.lw-contour {
-  stroke-width: calc(1.35px * var(--lw));
-  stroke-opacity: 0.95;
-}
-.lw-detail {
-  stroke-width: calc(0.95px * var(--lw));
-  stroke-opacity: 0.78;
-}
-.lw-fine {
-  stroke-width: calc(0.7px * var(--lw));
-  stroke-opacity: 0.5;
-}
-.lw-dot {
-  fill: var(--ci-gold-light);
-  fill-opacity: 0.85;
-  stroke: none;
-  opacity: 0;
-}
-.lw-jasmine {
-  fill: var(--ci-ivory);
-  fill-opacity: 0.6;
-}
-.lw-glow {
-  opacity: 0;
+  background: radial-gradient(130% 95% at 50% 45%, transparent 55%, rgba(16, 13, 13, 0.6) 100%);
 }

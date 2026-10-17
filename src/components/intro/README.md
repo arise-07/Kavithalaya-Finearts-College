@@ -1,14 +1,17 @@
 # Cinematic intro
 
-Opening sequence for Kavithalaya Naatiyapalli, about 7.6 seconds long:
+Opening sequence for Kavithalaya Naatiyapalli, about 5.4 seconds long:
 
-| Time      | Scene                                                              |
-| --------- | ------------------------------------------------------------------ |
-| 0–1.45 s  | 01 Temple awakens: glow, gopuram silhouette, rim light, lamps, dust |
-| 1.45–2.9 s | 02 Dancer rises into view, arms open to Natyarambhe, golden pulse |
-| 2.9–5.5 s | 03 Gold lines travel in from the fingertips and join up into a line drawing of the dancer: arms, torso, head, fan, legs, then costume and jewellery |
-| 5.45–7 s | Vanakkam: the dancer folds her arms in and greets with palms joined at the chest; the gold drawing moves with her |
-| 5.6–7.6 s | 04 Warm illumination, temple revealed, the greeting holds |
+| Time       | Scene                                                                    |
+| ---------- | ------------------------------------------------------------------------ |
+| 0–1.4 s    | 01 The temple emerges from darkness (dark plate fades in)                |
+| 1.1–3.5 s  | 02 Gold light rises up the temple from the platform to the gopuram       |
+| 2.3–4.8 s  | 03 The glow behind the gopuram swells, then settles                      |
+| 2.7–4.4 s  | 04 Two gold dancer sketches rise into view either side of the temple     |
+| to 5.4 s   | Hold on the lit temple, then complete                                    |
+
+A slow forward camera (scale 1.06 → 1) runs under the whole sequence. There
+are no particles.
 
 ## Usage
 
@@ -22,53 +25,62 @@ import CinematicIntro from './components/intro/CinematicIntro.jsx'
   and `aria-hidden`. It never takes focus.
 - Locks page scrolling while it plays and restores it when it ends or unmounts.
 - Holds its final frame after `onComplete`. The parent decides when to unmount it.
-- With `prefers-reduced-motion: reduce`, the final composition appears with a 0.8 s fade.
+- With `prefers-reduced-motion: reduce`, the lit temple appears with a 0.8 s fade.
 - In development, `window.__introTimeline` exposes the GSAP timeline for scrubbing
-  (for example `__introTimeline.pause(3.5)`). It is removed from production builds.
+  (for example `__introTimeline.pause(2)`). It is removed from production builds.
 
 ## Files
 
 | File | Role |
 | --- | --- |
-| `CinematicIntro.jsx` | Layer stack, asset preloading, lifecycle and cleanup |
-| `timeline.js` | The single GSAP timeline and the dancer pose driver |
-| `TempleScene.jsx` | Layers 1–3: atmosphere, procedural gopuram, shrines, lamps, temple light |
-| `Dancer.jsx` / `dancerGeometry.js` | Layer 4: jointed silhouette in Natyarambhe, or a supplied cutout |
-| `GoldenLines.jsx` / `lineArt.js` | Layer 5: gold line drawing of the dancer, traced over the silhouette |
-| `dust.js` | Layer 6: canvas dust, stopped when the sequence ends |
-| `geometry.js` | Shared viewBoxes, layout queries and SVG path helpers |
-| `introAssets.js` | Optional production image assets |
+| `CinematicIntro.jsx` | Layer stack, image decoding, lifecycle and cleanup |
+| `timeline.js` | The single GSAP timeline |
+| `introAssets.js` | Plate paths and the portrait media query |
+| `dust.js` | Gold dust canvas, used by the hero (not by the intro) |
 
-## Assets to supply before client delivery
+## Plates
 
-Both are optional. Without them, the intro uses its built-in SVG artwork. Place
-files in `public/images/intro/` and register them in `introAssets.js`.
+Four WebP images in `public/images/intro/`, made from a line drawing of the
+temple in an engraved-gold style: burgundy background, the temple as dark
+stone covered in fine horizontal engraving that thickens where the light
+falls (cross-hatched in the brightest areas, with recessed panels darker and
+a shadow under each cornice), metallic gold outlines with a raised highlight
+on their upper edges, champagne rim light, and a gold glow behind the
+gopuram.
 
-### 1. Dancer cutout (recommended)
+The temple is centred on every plate: 48% of the width with its base at 86%
+of the height on the wide plates; 78% of the width with its base at 52% on
+the tall ones, leaving the lower half for the dancers. The `.ci-bloom` light
+in `CinematicIntro.css` follows the same positions.
 
-- **File:** `public/images/intro/dancer.webp` (or `.png`)
-- **Content:** a licensed photograph of a Bharatanatyam dancer, front-facing, in
-  Natyarambhe (araimandi with both arms extended at shoulder level), matching the
-  built-in pose so the gold line drawing registers on it. Full figure, head to feet, nothing cropped.
-- **Format:** transparent background, cleanly masked hair and hands. Roughly
-  1600 px tall, WebP with alpha under about 400 KB.
-- **Registration:** set `box` (where the image sits in world units; the ground line
-  is `y = 132`, the figure is centred on `x = 0`) and `anchors` (fingertips, toes,
-  crown and centre) for the pulse and glow accents.
-- The image fades and rises into place. The arm-sweep animation only applies to
-  the built-in silhouette.
+## Dancers
 
-### 2. Final hero plate (optional)
+`dancer-left.webp` and `dancer-right.webp` (1113 × 1800, transparent) are a
+Bharatanatyam pencil sketch converted to the same engraved-gold style:
+metallic strokes, a dark body, and engraving where the pencil drawing is
+shaded (plain areas such as the face stay smooth). The right one
+is the same drawing mirrored, with the artist's signature removed so it does
+not appear reversed; replace it when a second pose is available. They are
+positioned in CSS from the wide plate's geometry (see `.ci-dancer`), so if
+the temple's size or ground line changes, update those numbers too. On
+wide screens they stand either side of the temple; on portrait screens
+side by side below it; on near-square screens (between 4:5 and 5:4) they
+are hidden.
 
-- **File:** `public/images/intro/final-hero.webp`
-- **Content:** a full-bleed cinematic background (temple architecture or an
-  atmospheric interior) **without a dancer**. The dancer stays layered on top.
-  Keep the centre darker so the dancer and linework stay legible.
-- **Format:** 2560 × 1440 or larger, WebP, under about 500 KB. It is shown with
-  `object-fit: cover`, so keep important detail central for portrait crops.
+| File | Size | Use |
+| --- | --- | --- |
+| `temple-wide-dark.webp` / `temple-wide-lit.webp` | 3840 × 2160 | Landscape and near-square screens |
+| `temple-tall-dark.webp` / `temple-tall-lit.webp` | 1620 × 2880 | Portrait screens (narrower than 4:5) |
 
-### Failure behaviour
+Both source drawings are small, so they are first enlarged with EDSR
+super-resolution (the temple 2x, the dancer sketch 4x); the strokes are then
+given clean edges at full resolution, which keeps the gold lines crisp on 4K
+and high-density screens.
 
-A dancer image gets 2.5 s to load, otherwise the silhouette is used. A hero plate
-that fails is skipped, and one that arrives late fades in on its own. The intro
-always completes.
+The dark and lit plates of each pair must stay pixel-aligned, since one is
+revealed over the other. Both are shown with `object-fit: cover`.
+
+## Failure behaviour
+
+The plates get 3 s to decode, then the sequence starts regardless; a late
+plate appears when it arrives. The intro always completes.

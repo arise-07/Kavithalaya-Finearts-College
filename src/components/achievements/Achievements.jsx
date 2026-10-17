@@ -1,7 +1,7 @@
 import { HIGHLIGHTS, MILESTONES } from '../../data/achievements.js'
-import { WHATSAPP_URL } from '../../data/site.js'
 import { Eyebrow } from '../layout/LightPage.jsx'
 import { GoldDivider, KolamTile, LotusMotif, TempleBell } from '../ornaments/Ornaments.jsx'
+import { useEnquiry } from '../enquiry/EnquiryContext.js'
 import AchievementIcon from './AchievementIcon.jsx'
 import './Achievements.css'
 
@@ -11,6 +11,8 @@ import './Achievements.css'
  * All wording comes from src/data/achievements.js.
  */
 export default function Achievements() {
+  const openEnquiry = useEnquiry()
+
   return (
     <div id="achievements" className="light-page achievements">
       <section className="ach-opening ach-dark" aria-labelledby="achievements-title">
@@ -104,13 +106,12 @@ export default function Achievements() {
             <a className="btn btn--primary" href="#classes">
               Explore Our Classes
             </a>
-            <a className="ach-cta__link" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+            <button type="button" className="ach-cta__link" aria-haspopup="dialog" onClick={() => openEnquiry()}>
               Enquire on WhatsApp
               <span className="ach-cta__arrow" aria-hidden="true">
                 →
               </span>
-              <span className="visually-hidden"> (opens in a new tab)</span>
-            </a>
+            </button>
           </div>
         </div>
       </section>

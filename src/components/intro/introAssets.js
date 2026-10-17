@@ -1,33 +1,29 @@
-// Production image assets for the intro. Both are optional: with `null`, the
-// intro uses its built-in SVG silhouette and SVG final composition. See
-// README.md in this folder for the full asset specification.
+// Image plates for the intro, in /public/images/intro/. Each orientation has
+// the same temple in two states: `dark` (before the light arrives) and `lit`
+// (gold glow behind the gopuram, engraved gold linework, rim light). The intro fades
+// in the dark plate, then sweeps the lit plate up over it.
 //
-// Files live in /public/images/intro/ and are referenced by absolute path.
+// `tall` plates are used on portrait screens (narrower than 4:5): the temple
+// sits in the upper half with room for the dancers below it.
 
 export const INTRO_ASSETS = {
-  // Transparent cutout of the dancer. The gold line drawing (lineArt.js) is
-  // traced over the built-in Natyarambhe pose, so a photograph should be in
-  // the same pose and registered with `box` so the lines sit on it.
-  //
-  // dancer: {
-  //   src: '/images/intro/dancer.webp',
-  //   // Where the image sits in the intro's world coordinates. The ground
-  //   // line is y = 132; the figure is centred on x = 0.
-  //   box: { x: -240, y: -260, width: 480, height: 400 },
-  //   // Points used for the golden pulse and glow accents.
-  //   anchors: {
-  //     center: [0, -60],
-  //     fingerR: [218, -180],
-  //     fingerL: [-218, -180],
-  //     toeR: [72, 129],
-  //     toeL: [-72, 129],
-  //     headTop: [0, -247],
-  //   },
-  // },
-  dancer: null,
-
-  // Full-bleed hero background (no dancer in it; the dancer stays layered on
-  // top). Crossfades in during the final reveal. Example:
-  // finalPlate: '/images/intro/final-hero.webp',
-  finalPlate: null,
+  wide: {
+    dark: '/images/intro/temple-wide-dark.webp',
+    lit: '/images/intro/temple-wide-lit.webp',
+  },
+  tall: {
+    dark: '/images/intro/temple-tall-dark.webp',
+    lit: '/images/intro/temple-tall-lit.webp',
+  },
+  // Engraved-gold versions of a Bharatanatyam pencil sketch, on transparency.
+  // The right one is the same drawing mirrored (signature removed) until a
+  // second pose is supplied. Hidden on near-square screens.
+  dancers: {
+    left: '/images/intro/dancer-left.webp',
+    right: '/images/intro/dancer-right.webp',
+  },
 }
+
+// Media query that selects the tall plates. Kept in step with the <source>
+// elements in CinematicIntro.jsx.
+export const TALL_QUERY = '(max-aspect-ratio: 4/5)'

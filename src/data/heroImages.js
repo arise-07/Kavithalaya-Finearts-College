@@ -1,55 +1,28 @@
-// Hero slideshow images, in display order. Each is a sharper WebP made from
-// the supplied image with AI super-resolution (EDSR 2x) and light
-// sharpening, because the originals are too small for a full-screen hero.
+// Hero slideshow images, in display order. Each is built from a gallery photo
+// (public/images/asserts/gallery/gallery_N-1440.webp): the photo sits right
+// of centre on a 2560x1440 burgundy stage with a soft gold glow, colour-
+// graded so its shadows fall toward burgundy and its highlights warm toward
+// gold, with its edges fading into the stage (a long fade on the left, under
+// the headline).
 //
 // `position` / `positionMobile` set object-position so the dancers stay in
 // frame: wide screens keep the subject right of the headline, portrait
 // screens centre on the principal dancer. `focus` is the transform-origin
 // for the slow zoom, placed near the dancer's face and hands.
+const slide = (n, alt, focus, positionMobile = '77% 50%') => ({
+  src: `/images/asserts/hero/hero_${n}.webp`,
+  width: 2560,
+  height: 1440,
+  alt,
+  position: '64% 35%',
+  positionMobile,
+  focus,
+})
+
 export const HERO_IMAGES = [
-  {
-    src: '/images/asserts/image_1-hd.webp',
-    width: 2048,
-    height: 1144,
-    alt: 'Bharatanatyam dancer reaching upward in a sunlit stone temple hall',
-    position: '62% 50%',
-    positionMobile: '71% 50%',
-    focus: '70% 35%',
-  },
-  {
-    src: '/images/asserts/image_2-hd.webp',
-    width: 2560,
-    height: 1441,
-    alt: 'Bharatanatyam dancer in a wide classical stance beside a brass lamp in a temple',
-    position: '62% 50%',
-    positionMobile: '70% 50%',
-    focus: '70% 30%',
-  },
-  {
-    src: '/images/asserts/image_3-hd.webp',
-    width: 2048,
-    height: 1144,
-    alt: 'Three Bharatanatyam dancers in saffron and crimson costumes posing together',
-    position: '70% 50%',
-    positionMobile: '79% 50%',
-    focus: '80% 35%',
-  },
-  {
-    src: '/images/asserts/image_4-hd.webp',
-    width: 2048,
-    height: 1144,
-    alt: 'Bharatanatyam dancer leaping in a pillared temple courtyard',
-    position: '60% 50%',
-    positionMobile: '66% 50%',
-    focus: '66% 35%',
-  },
-  {
-    src: '/images/asserts/image_5-hd.webp',
-    width: 2048,
-    height: 1144,
-    alt: 'Five Bharatanatyam dancers performing together in a temple corridor',
-    position: '60% 50%',
-    positionMobile: '50% 50%',
-    focus: '55% 35%',
-  },
+  slide(2, 'Bharatanatyam dancer in a red costume in a wide stance on stage, arms extended', '66% 25%'),
+  slide(21, 'Close view of a Bharatanatyam dancer framing her face with a hand gesture', '70% 30%'),
+  slide(6, 'Bharatanatyam dancer in red holding a pose with one hand raised', '67% 30%'),
+  slide(9, 'Bharatanatyam dancer in red seated in a deep pose, palms joined above her head', '67% 30%'),
+  slide(20, 'Bharatanatyam dancer in red in a deep side lunge, hands raised in a mudra beside her face', '69% 22%', '74% 50%'),
 ]

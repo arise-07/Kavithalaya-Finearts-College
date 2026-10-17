@@ -303,9 +303,12 @@
   margin-top: 1.5rem;
 }
 
+/* Side-by-side fields keep to the top of the row, so an error message under
+   one never stretches the other. */
 .contact-form__row {
   display: grid;
   gap: 1.15rem;
+  align-items: start;
 }
 
 @media (min-width: 36em) {

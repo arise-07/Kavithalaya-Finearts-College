@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { HERO_IMAGES } from '../../data/heroImages.js'
-import { WHATSAPP_URL } from '../../data/site.js'
+import { useEnquiry } from '../enquiry/EnquiryContext.js'
 import WhatsAppIcon from '../icons/WhatsAppIcon.jsx'
 import { createDust } from '../intro/dust.js'
 import { HeroBackdrop, SlideControls } from './HeroSlider.jsx'
@@ -34,6 +34,33 @@ function HeroParticles({ active }) {
   return <canvas ref={canvasRef} className="hero-particles" aria-hidden="true" />
 }
 
+// A horizontal swipe at least this long (px), and more horizontal than
+// vertical, changes slide on touch screens.
+const SWIPE_MIN_PX = 50
+
+/**
+ * Swipe left/right on the hero to move between slides. Vertical drags are
+ * left alone so the page still scrolls normally.
+ */
+function useSwipe({ index, count, goTo }) {
+  const start = useRef(null)
+  return {
+    onTouchStart: (e) => {
+      const t = e.touches[0]
+      start.current = { x: t.clientX, y: t.clientY }
+    },
+    onTouchEnd: (e) => {
+      if (!start.current) return
+      const t = e.changedTouches[0]
+      const dx = t.clientX - start.current.x
+      const dy = t.clientY - start.current.y
+      start.current = null
+      if (Math.abs(dx) < SWIPE_MIN_PX || Math.abs(dx) < Math.abs(dy) * 1.5) return
+      goTo((index + (dx < 0 ? 1 : count - 1)) % count)
+    },
+  }
+}
+
 /**
  * Homepage hero: cinematic background slideshow, headline and the two
  * enquiry paths. `revealed` starts the slideshow and the copy's entrance once
@@ -45,9 +72,16 @@ export default function Hero({ revealed }) {
     interval: SLIDE_INTERVAL_MS,
     fade: FADE_MS,
   })
+  const swipe = useSwipe({ index: slideshow.index, count: HERO_IMAGES.length, goTo: slideshow.goTo })
+  const openEnquiry = useEnquiry()
 
   return (
-    <section id="home" className={`hero${revealed ? ' is-revealed' : ''}`} aria-labelledby="hero-title">
+    <section
+      id="home"
+      className={`hero${revealed ? ' is-revealed' : ''}`}
+      aria-labelledby="hero-title"
+      {...swipe}
+    >
       <HeroBackdrop images={HERO_IMAGES} playing={revealed} {...slideshow} />
       <HeroParticles active={revealed} />
 
@@ -65,11 +99,10 @@ export default function Hero({ revealed }) {
             <a className="btn btn--primary" href="#classes">
               Explore Our Classes
             </a>
-            <a className="btn btn--secondary" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+            <button type="button" className="btn btn--secondary" aria-haspopup="dialog" onClick={() => openEnquiry()}>
               <WhatsAppIcon />
               Enquire on WhatsApp
-              <span className="visually-hidden"> (opens in a new tab)</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>

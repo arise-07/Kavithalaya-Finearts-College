@@ -1,17 +1,8 @@
 import { CLASSES } from '../../data/classes.js'
-import { WHATSAPP_URL } from '../../data/site.js'
 import { useEnquiry } from '../enquiry/EnquiryContext.js'
 import WhatsAppIcon from '../icons/WhatsAppIcon.jsx'
 import { Eyebrow } from '../layout/LightPage.jsx'
-import {
-  GhungrooString,
-  GoldDivider,
-  HangingLamp,
-  JasmineSprig,
-  KolamBand,
-  LotusMotif,
-  TempleBell,
-} from '../ornaments/Ornaments.jsx'
+import { GhungrooString, GoldDivider, HangingLamp, JasmineSprig, LotusMotif } from '../ornaments/Ornaments.jsx'
 import './Classes.css'
 
 function CourseCard({ course, number, eager }) {
@@ -61,7 +52,30 @@ function CourseCard({ course, number, eager }) {
   )
 }
 
-/** Our Classes: the class grid, followed by the closing enquiry section. */
+/** A compact enquiry panel beneath the class grid, for visitors still deciding. */
+function ClassesHelp() {
+  const openEnquiry = useEnquiry()
+
+  return (
+    <aside className="classes-help" aria-labelledby="classes-help-title">
+      <LotusMotif className="classes-help__lotus" />
+      <div className="classes-help__text">
+        <h3 id="classes-help-title" className="classes-help__title">
+          Not sure where to begin?
+        </h3>
+        <p className="classes-help__body">Tell us a little about yourself and we will help you find the right class.</p>
+      </div>
+      <div className="classes-help__actions">
+        <button type="button" className="btn btn--primary" aria-haspopup="dialog" onClick={() => openEnquiry()}>
+          <WhatsAppIcon />
+          Enquire on WhatsApp
+        </button>
+      </div>
+    </aside>
+  )
+}
+
+/** Our Classes: the class grid, followed by a compact enquiry panel. */
 export default function Classes() {
   return (
     <div id="classes" className="light-page classes-page">
@@ -93,23 +107,7 @@ export default function Classes() {
               </li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      <section className="classes-cta" aria-labelledby="classes-cta-title">
-        <KolamBand className="classes-cta__kolam" />
-        <TempleBell className="classes-cta__bell classes-cta__bell--left" />
-        <TempleBell className="classes-cta__bell classes-cta__bell--right" />
-        <div className="page-container page-container--narrow">
-          <h2 id="classes-cta-title" className="page-heading">
-            Ready to Begin Your Artistic Journey?
-          </h2>
-          <p className="page-body classes-cta__text">Speak with us to find the right class for you.</p>
-          <a className="btn btn--burgundy" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-            <WhatsAppIcon />
-            Enquire on WhatsApp
-            <span className="visually-hidden"> (opens in a new tab)</span>
-          </a>
+          <ClassesHelp />
         </div>
       </section>
     </div>

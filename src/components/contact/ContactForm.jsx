@@ -5,7 +5,7 @@ import { buildContactMessage, validateContact } from '../enquiry/enquiryForm.js'
 import WhatsAppIcon from '../icons/WhatsAppIcon.jsx'
 
 const EMPTY = { fullName: '', mobile: '', email: '', course: '', message: '' }
-const VALIDATED = ['fullName', 'mobile', 'email']
+const VALIDATED = ['fullName', 'mobile', 'email', 'course']
 
 /**
  * Contact enquiry form. Validates with the same rules as the enquiry modal,
@@ -105,15 +105,22 @@ export default function ContactForm() {
           {errorFor('mobile')}
         </div>
         <div className={`enquiry-field${visibleError('email') ? ' has-error' : ''}`}>
-          {labelFor('email', 'Email Address', true)}
-          <input {...fieldProps('email')} type="email" inputMode="email" autoComplete="email" autoCapitalize="off" />
+          {labelFor('email', 'Email Address')}
+          <input
+            {...fieldProps('email')}
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            autoCapitalize="off"
+            required
+          />
           {errorFor('email')}
         </div>
       </div>
 
-      <div className="enquiry-field">
-        {labelFor('course', 'Course of Interest', true)}
-        <select {...fieldProps('course')} className="enquiry-field__input contact-form__select">
+      <div className={`enquiry-field${visibleError('course') ? ' has-error' : ''}`}>
+        {labelFor('course', 'Course of Interest')}
+        <select {...fieldProps('course')} className="enquiry-field__input contact-form__select" required>
           <option value="">Select a class</option>
           {CLASSES.map((course) => (
             <option key={course.name} value={course.name}>
@@ -122,6 +129,7 @@ export default function ContactForm() {
           ))}
           <option value="Not sure yet">Not sure yet</option>
         </select>
+        {errorFor('course')}
       </div>
 
       <div className="enquiry-field">

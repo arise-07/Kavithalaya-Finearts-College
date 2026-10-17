@@ -51,10 +51,15 @@ export function HeroBackdrop({ images, index, previous, leaving, furthest, playi
   )
 }
 
-/** Minimal slide indicators with a pause control for the autoplay. */
+const pad = (n) => String(n).padStart(2, '0')
+
+/** Slide counter, minimal slide indicators and a pause control for the autoplay. */
 export function SlideControls({ count, index, goTo, autoplay, userPaused, togglePause, reduceMotion, interval }) {
   return (
     <div className="slide-controls">
+      <p className="slide-controls__count" aria-hidden="true">
+        {pad(index + 1)} <span>/ {pad(count)}</span>
+      </p>
       {!reduceMotion && (
         <button
           type="button"
