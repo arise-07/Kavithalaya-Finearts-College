@@ -1,0 +1,100 @@
+/* Floating buttons, bottom-right: back to top (light beige) above WhatsApp
+   (burgundy). They sit under the header (z-index 50), so the open mobile
+   menu covers them; modals open in the top layer above everything. */
+.floating-actions {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  opacity: 0;
+  transform: translateY(0.75rem);
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.floating-actions.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.floating-btn {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -8px rgb(16 13 13 / 0.45);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.floating-btn:hover {
+  transform: translateY(-2px);
+}
+
+.floating-btn svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.floating-btn--top {
+  border: 1px solid rgb(122 92 46 / 0.35);
+  background: var(--c-ivory);
+  color: var(--c-burgundy);
+}
+
+.floating-btn--top:hover {
+  background: var(--c-cream);
+}
+
+.floating-btn--whatsapp {
+  border: 1px solid rgb(198 163 101 / 0.55);
+  background: var(--c-burgundy);
+  color: var(--c-ivory);
+}
+
+.floating-btn--whatsapp:hover {
+  background: #4b1f2c;
+  color: var(--c-gold-warm);
+}
+
+.floating-btn:focus-visible {
+  outline: 2px solid var(--c-gold-warm);
+  outline-offset: 3px;
+}
+
+/* Small phones: slightly smaller and closer to the corner. */
+@media (max-width: 29.99em) {
+  .floating-actions {
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    gap: 0.6rem;
+  }
+
+  .floating-btn {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-actions,
+  .floating-btn {
+    transition-duration: 0.01s;
+  }
+
+  .floating-btn:hover {
+    transform: none;
+  }
+}

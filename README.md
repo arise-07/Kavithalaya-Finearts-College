@@ -13,6 +13,7 @@ It is a single-page, static front-end application built with React and Vite. The
 - **Enquiries through WhatsApp**: an enquiry modal and a contact form, both validated in the browser, that open WhatsApp with the visitor's details written out (see [WhatsApp enquiries](#whatsapp-enquiries)).
 - **Scroll-triggered enquiry popup**: opens at most twice per browser-tab session and never after an enquiry has been sent.
 - **Contact details**: phone, WhatsApp, email, social links and an embedded Google Map.
+- **Floating buttons**: back-to-top and WhatsApp enquiry buttons that appear once the visitor scrolls past the hero.
 - **Search metadata**: title, description, canonical URL, Open Graph and Twitter cards, JSON-LD structured data, `robots.txt` and `sitemap.xml`.
 
 ## Technology
@@ -47,7 +48,7 @@ Styling is plain CSS, one stylesheet per component. Images are pre-optimised Web
 │   └── components/
 │       ├── intro/          # Cinematic intro (documented in its own README)
 │       ├── navbar/  hero/  about/  achievements/  classes/
-│       ├── gallery/  contact/  enquiry/  footer/
+│       ├── gallery/  contact/  enquiry/  floating/  footer/
 │       └── layout/  ornaments/  icons/
 ├── vite.config.js
 └── .oxlintrc.json

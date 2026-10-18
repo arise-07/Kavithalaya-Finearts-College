@@ -7,6 +7,7 @@ import Footer from './components/footer/Footer.jsx'
 import Gallery from './components/gallery/Gallery.jsx'
 import Hero from './components/hero/Hero.jsx'
 import EnquiryProvider from './components/enquiry/EnquiryProvider.jsx'
+import FloatingActions from './components/floating/FloatingActions.jsx'
 import CinematicIntro from './components/intro/CinematicIntro.jsx'
 import Navbar from './components/navbar/Navbar.jsx'
 import { LotusSeam } from './components/ornaments/Ornaments.jsx'
@@ -48,6 +49,7 @@ function App() {
           <Contact />
         </main>
         <Footer />
+        <FloatingActions />
       </div>
 
       {introMounted && (
