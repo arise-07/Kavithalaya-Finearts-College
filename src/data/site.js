@@ -24,19 +24,17 @@ export const whatsappUrl = (message) =>
 
 // Contact details supplied by the academy.
 export const CONTACT = {
-  phone: { display: '099940 47684', href: 'tel:+919994047684' },
+  phone: { display: '+91 99940 47684', href: 'tel:+919994047684' },
   whatsapp: { display: WHATSAPP_DISPLAY, href: `https://wa.me/${WHATSAPP_NUMBER}` },
   email: { display: 'nisharajinn@gmail.com', href: 'mailto:nisharajinn@gmail.com' },
 }
 
 // The academy's social media pages, shown as buttons in Contact and the
-// footer. Replace each '#' with the page's full address, e.g.
-// 'https://www.instagram.com/your-page/'. While a link is '#', its button
-// shows but does nothing when clicked.
+// footer. A link set to '#' shows its button but does nothing when clicked.
 export const SOCIAL = [
-  { id: 'instagram', label: 'Instagram', href: '#' },
-  { id: 'facebook', label: 'Facebook', href: '#' },
-  { id: 'youtube', label: 'YouTube', href: '#' },
+  { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/kavithalaya__naatiyapalli/' },
+  { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/Kavithalayanattiyapalli' },
+  { id: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@kavithalayanaatiyapalli1326' },
 ]
 
 // Academy location for the Contact map, from the Google Maps embed supplied

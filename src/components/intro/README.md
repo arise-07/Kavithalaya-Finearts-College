@@ -55,7 +55,7 @@ in `CinematicIntro.css` follows the same positions.
 
 ## Dancers
 
-`dancer-left.webp` and `dancer-right.webp` (1113 × 1800, transparent) are a
+`dancer-left.webp` and `dancer-right.webp` (866 × 1400, transparent) are a
 Bharatanatyam pencil sketch converted to the same engraved-gold style:
 metallic strokes, a dark body, and engraving where the pencil drawing is
 shaded (plain areas such as the face stay smooth). The right one

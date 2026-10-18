@@ -41,7 +41,7 @@ export const JOURNEY = [
   {
     marker: 'Classes',
     title: 'Many art forms, one home',
-    text: 'Alongside Bharatham, the academy teaches Western dance, drawing, Silambam and vocal music.',
+    text: 'Alongside Bharatham, the academy teaches Western dance, drawing, Silambam, vocal music and yoga.',
   },
   {
     marker: 'Growth',

@@ -1,28 +1,32 @@
 import { useCallback, useState } from 'react'
 import { EnquiryContext } from './EnquiryContext.js'
 import EnquiryModal from './EnquiryModal.jsx'
-import { markPopupState, readPopupState, useScrollPopup } from './useScrollPopup.js'
+import { markPopupClosed, markPopupShown, markPopupSubmitted, useScrollPopup } from './useScrollPopup.js'
 
 /**
  * Owns the single enquiry modal for the site. Any component can open it with
- * `useEnquiry()`; it also opens automatically once per tab session after the
- * visitor scrolls 45% of the page (when `autoPopup` is true).
+ * `useEnquiry()`; it also opens automatically up to twice per tab session as
+ * the visitor scrolls down the page (when `autoPopup` is true).
  */
 export default function EnquiryProvider({ autoPopup, children }) {
   const [open, setOpen] = useState(false)
   const [course, setCourse] = useState(null)
 
   // `openEnquiry({ course })` tags the enquiry with a class; plain
-  // `openEnquiry()` opens a general one. A visitor who opens the form
-  // themselves is not interrupted by the automatic popup later on.
+  // `openEnquiry()` opens a general one. Opening the form yourself counts
+  // toward the two automatic popups, so a visitor is never shown it more
+  // than twice in all.
   const openEnquiry = useCallback((options) => {
-    if (!readPopupState()) markPopupState('opened')
+    markPopupShown()
     setCourse(options?.course ?? null)
     setOpen(true)
   }, [])
 
-  const close = useCallback(() => setOpen(false), [])
-  const handleSubmitted = useCallback(() => markPopupState('submitted'), [])
+  const close = useCallback(() => {
+    markPopupClosed()
+    setOpen(false)
+  }, [])
+  const handleSubmitted = useCallback(() => markPopupSubmitted(), [])
 
   useScrollPopup({
     enabled: autoPopup && !open,

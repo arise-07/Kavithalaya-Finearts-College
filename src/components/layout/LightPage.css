@@ -4,8 +4,9 @@
 
 .light-page {
   /* Antique gold is too light for small text on cream; this deeper bronze
-     keeps gold-toned labels at AA contrast. */
-  --c-gold-ink: #876734;
+     keeps gold-toned labels at AA contrast (4.5:1 or better) on both the
+     cream and ivory grounds. */
+  --c-gold-ink: #7a5c2e;
 
   display: block;
   color: var(--c-ink);

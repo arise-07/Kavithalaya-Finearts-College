@@ -33,7 +33,7 @@ export const CLASSES = [
   {
     name: 'Silambam',
     description: 'Discover the traditional Tamil martial art of Silambam.',
-    image: image(4, 'Two Silambam practitioners crossing bamboo staffs in a stone courtyard', '45% 50%'),
+    image: image(4, 'Three Silambam practitioners in low stances with bamboo staffs in a stone courtyard', '95% 50%'),
   },
   {
     name: 'Vocal Music',
@@ -41,8 +41,8 @@ export const CLASSES = [
     image: image(5, 'A young singer with a tanpura practising Carnatic music, an elder musician seated beside him', '90% 50%'),
   },
   {
-    name: 'Keyboard / Instrumental Music',
-    description: 'Learn musical notes, rhythm, and instrumental playing.',
-    image: image(6, 'A young musician playing an electronic keyboard in a music room', '66% 50%'),
+    name: 'Yoga',
+    description: 'Build strength, flexibility, and calm through breathing, postures, and meditation.',
+    image: image(6, 'Five adults meditating cross-legged on mats in a tiled courtyard surrounded by plants', '100% 50%'),
   },
 ]

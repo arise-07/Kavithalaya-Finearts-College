@@ -2,8 +2,7 @@
 // here so it can be updated as details are confirmed.
 //
 // Keep these statements as reported by the academy: no record titles,
-// dates, event names, venues, logos or medals unless documented. Do not
-// show a founding year until 2004 / 2006 is confirmed.
+// dates, event names, venues, logos or medals unless documented.
 
 export const HIGHLIGHTS = [
   {

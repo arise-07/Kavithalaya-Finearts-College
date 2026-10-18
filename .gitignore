@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Full-size original photos, kept locally for re-exporting images; the site
+# only uses the optimised copies in public/images/.
+source-images
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -75,6 +75,28 @@
   text-transform: uppercase;
 }
 
+/* Tighter wordmark where its column is narrow (small phones, and the
+   four-column layout below 1280px), so it never runs into the next column
+   or past the screen edge. */
+@media (max-width: 24em), (min-width: 64em) and (max-width: 79.99em) {
+  .footer-brand {
+    gap: 0.7rem;
+  }
+
+  .footer-brand__logo {
+    height: 3.75rem;
+  }
+
+  .footer-brand__name {
+    font-size: 1.2rem;
+    letter-spacing: 0.14em;
+  }
+
+  .footer-brand__sub {
+    letter-spacing: 0.22em;
+  }
+}
+
 .footer-brand__sub {
   font-size: 0.66rem;
   font-weight: 500;

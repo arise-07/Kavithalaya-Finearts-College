@@ -5,7 +5,7 @@ import { Eyebrow } from '../layout/LightPage.jsx'
 import { GhungrooString, GoldDivider, HangingLamp, JasmineSprig, LotusMotif } from '../ornaments/Ornaments.jsx'
 import './Classes.css'
 
-function CourseCard({ course, number, eager }) {
+function CourseCard({ course, number }) {
   const openEnquiry = useEnquiry()
   const { image } = course
 
@@ -19,7 +19,7 @@ function CourseCard({ course, number, eager }) {
               width={image.width}
               height={image.height}
               alt={image.alt}
-              loading={eager ? 'eager' : 'lazy'}
+              loading="lazy"
               decoding="async"
               style={{ objectPosition: image.focus }}
             />
@@ -103,7 +103,7 @@ export default function Classes() {
           <ul className="course-grid">
             {CLASSES.map((course, i) => (
               <li key={course.name}>
-                <CourseCard course={course} number={i + 1} eager={i < 3} />
+                <CourseCard course={course} number={i + 1} />
               </li>
             ))}
           </ul>

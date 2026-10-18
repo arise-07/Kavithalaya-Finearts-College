@@ -22,7 +22,7 @@ const slide = (n, alt, focus, positionMobile = '77% 50%') => ({
 export const HERO_IMAGES = [
   slide(2, 'Bharatanatyam dancer in a red costume in a wide stance on stage, arms extended', '66% 25%'),
   slide(21, 'Close view of a Bharatanatyam dancer framing her face with a hand gesture', '70% 30%'),
-  slide(6, 'Bharatanatyam dancer in red holding a pose with one hand raised', '67% 30%'),
+  slide(4, 'Bharatanatyam dancer in red smiling as she performs a hand gesture', '72% 40%', '78% 50%'),
   slide(9, 'Bharatanatyam dancer in red seated in a deep pose, palms joined above her head', '67% 30%'),
   slide(20, 'Bharatanatyam dancer in red in a deep side lunge, hands raised in a mudra beside her face', '69% 22%', '74% 50%'),
 ]
